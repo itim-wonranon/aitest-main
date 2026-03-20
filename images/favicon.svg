@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" width="100%" height="100%">
+    <!-- Roof -->
+    <polygon points="320,48 16,224 624,224" fill="#F5E7C6"/>
+    
+    <!-- Base Building -->
+    <rect x="64" y="224" width="512" height="288" fill="#F5E7C6"/>
+    
+    <!-- Main Entrance / Door -->
+    <path d="M272 512 V352 a48 48 0 0 1 96 0 V512 z" fill="#2C3E50"/>
+    
+    <!-- Left Windows -->
+    <rect x="112" y="288" width="80" height="80" rx="12" fill="#2C3E50"/>
+    <rect x="112" y="400" width="80" height="80" rx="12" fill="#2C3E50"/>
+    
+    <!-- Right Windows -->
+    <rect x="448" y="288" width="80" height="80" rx="12" fill="#2C3E50"/>
+    <rect x="448" y="400" width="80" height="80" rx="12" fill="#2C3E50"/>
+    
+    <!-- Top Clock / Attic Window -->
+    <circle cx="320" cy="156" r="32" fill="#2C3E50"/>
+</svg>

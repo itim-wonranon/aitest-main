@@ -1,0 +1,185 @@
+@import url('https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap');
+
+:root {
+    --theme-primary: #F5E7C6; /* Main brand color requested */
+    --theme-primary-dark: #D4B872; /* Darker variant for borders/hovers */
+    --theme-text: #333333; /* Main text color */
+    
+    --sidebar-bg: #2C3E50; /* Dark slate to contrast with primary */
+    --sidebar-text: #F5E7C6; /* Match text to the primary color */
+    --sidebar-hover: #1A252F;
+    
+    --bg-light: #f4f6f9;
+}
+
+body {
+    font-family: 'Prompt', sans-serif;
+    background-color: var(--bg-light);
+    color: var(--theme-text);
+    overflow-x: hidden;
+}
+
+/* === Skeleton / Layout === */
+.wrapper {
+    display: flex;
+    width: 100%;
+    align-items: stretch;
+    min-height: 100vh;
+}
+
+/* === Sidebar === */
+#sidebar {
+    min-width: 260px;
+    max-width: 260px;
+    background: var(--sidebar-bg);
+    color: var(--sidebar-text);
+    transition: all 0.3s;
+    box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+    z-index: 1000;
+}
+
+#sidebar.active {
+    margin-left: -260px;
+}
+
+.sidebar-header {
+    padding: 20px;
+    background: var(--sidebar-hover);
+    text-align: center;
+    border-bottom: 2px solid var(--theme-primary-dark);
+}
+
+.brand-text {
+    color: var(--theme-primary);
+    font-weight: 600;
+    margin: 0;
+    font-size: 1.3rem;
+}
+
+#sidebar ul.components {
+    padding: 20px 0;
+}
+
+#sidebar ul li a {
+    padding: 12px 20px;
+    font-size: 1.05em;
+    display: block;
+    color: var(--sidebar-text);
+    text-decoration: none;
+    transition: 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+#sidebar ul li a:hover {
+    color: var(--theme-text);
+    background: var(--theme-primary);
+}
+
+#sidebar ul li.active > a {
+    background: var(--theme-primary);
+    color: var(--theme-text);
+    font-weight: 500;
+    border-left: 4px solid var(--theme-primary-dark);
+}
+
+a[data-bs-toggle="collapse"] {
+    position: relative;
+}
+
+/* Custom Dropdown Arrow */
+.dropdown-toggle::after {
+    display: block;
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+}
+
+ul.collapse {
+    background: rgba(0,0,0,0.2);
+}
+
+#sidebar ul.collapse li a {
+    padding-left: 50px;
+    font-size: 0.95em;
+}
+
+/* === Content Area === */
+#content {
+    width: 100%;
+    min-height: 100vh;
+    transition: all 0.3s;
+    display: flex;
+    flex-direction: column;
+}
+
+/* === Header / Navbar === */
+.navbar {
+    background: white;
+}
+
+.btn-theme {
+    background-color: var(--theme-primary);
+    color: var(--theme-text);
+    font-weight: 500;
+    border: 1px solid var(--theme-primary-dark);
+    transition: 0.2s;
+}
+
+.btn-theme:hover {
+    background-color: var(--theme-primary-dark);
+    color: white;
+}
+
+/* === KPI Cards === */
+.kpi-card {
+    border-radius: 12px;
+    border: none;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.kpi-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+}
+
+.border-left-primary { border-left: 4px solid #4e73df !important; }
+.border-left-success { border-left: 4px solid #1cc88a !important; }
+.border-left-info { border-left: 4px solid #36b9cc !important; }
+.border-left-warning { border-left: 4px solid #f6c23e !important; }
+
+.kpi-icon {
+    font-size: 2.5rem;
+    opacity: 0.4;
+}
+
+/* === Status Badges === */
+.status-badge {
+    padding: 0.4em 0.8em;
+    border-radius: 4px;
+    font-weight: 500;
+    font-size: 0.85em;
+}
+.status-badge.present { background-color: #d4edda; color: #155724; }
+.status-badge.absent { background-color: #f8d7da; color: #721c24; }
+.status-badge.late { background-color: #fff3cd; color: #856404; }
+.status-badge.leave { background-color: #d1ecf1; color: #0c5460; }
+
+/* === Responsive === */
+@media (max-width: 768px) {
+    #sidebar {
+        margin-left: -260px;
+        position: fixed;
+        height: 100vh;
+        overflow-y: auto;
+    }
+    #sidebar.active {
+        margin-left: 0;
+    }
+    #sidebarCollapse span {
+        display: none;
+    }
+}
