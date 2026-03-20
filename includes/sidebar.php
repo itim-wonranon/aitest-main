@@ -1,5 +1,8 @@
+<?php 
+if(session_status() !== PHP_SESSION_ACTIVE) session_start(); 
+$current_page = isset($_GET['page']) ? $_GET['page'] : basename($_SERVER['PHP_SELF']); 
+?>
 <!-- Sidebar Component -->
-<?php $current_page = basename($_SERVER['PHP_SELF']); ?>
 <nav id="sidebar">
     <div class="sidebar-header">
         <h4 class="brand-text"><img src="images/favicon.svg" alt="Logo" width="32" height="32"> สาธิตวิทยา</h4>

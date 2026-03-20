@@ -5,7 +5,8 @@ $(document).ready(function () {
     const loadComponents = async () => {
         try {
             // Load components sequentially to map DOM events correctly
-            await $('#sidebar-placeholder').load('includes/sidebar.php').promise();
+            const currentPage = window.location.pathname.split('/').pop() || 'index.php';
+            await $('#sidebar-placeholder').load('includes/sidebar.php?page=' + currentPage).promise();
             await $('#header-placeholder').load('includes/header.php').promise();
             await $('#footer-placeholder').load('includes/footer.php').promise();
             

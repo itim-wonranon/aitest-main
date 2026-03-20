@@ -1,5 +1,7 @@
-<?php 
-require_once 'includes/session_check.php'; 
+<?php
+
+require_once 'includes/session_check.php';
+
 check_role(['admin', 'student']);
 ?>
 <!DOCTYPE html>
