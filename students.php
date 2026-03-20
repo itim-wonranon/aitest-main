@@ -1,4 +1,7 @@
-<?php require_once 'includes/session_check.php'; ?>
+<?php 
+require_once 'includes/session_check.php'; 
+check_role(['admin', 'teacher']);
+?>
 <!DOCTYPE html>
 <html lang="th">
 <head>
@@ -33,13 +36,14 @@
                 
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <h2 class="h4 mb-0 text-dark fw-bold"><i class="fas fa-user-graduate me-2"></i>ระบบจัดการข้อมูลนักเรียน</h2>
-                    <?php if($_SESSION['role'] == 'admin'): ?>
+                    <?php if ($_SESSION['role'] == 'admin'): ?>
                     <div>
                         <button class="btn btn-theme shadow-sm" data-bs-toggle="modal" data-bs-target="#studentModal" onclick="openAddModal()">
                             <i class="fas fa-plus fa-sm text-dark-50 me-1"></i> เพิ่มข้อมูลนักเรียน
                         </button>
                     </div>
-                    <?php endif; ?>
+                    <?php
+endif; ?>
                 </div>
 
                 <!-- Alert Message Area -->

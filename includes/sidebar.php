@@ -6,10 +6,13 @@
     </div>
 
     <ul class="list-unstyled components">
+        <?php if ($_SESSION['role'] === 'admin'): ?>
         <li class="<?php echo ($current_page == 'index.php') ? 'active' : ''; ?>">
             <a href="index.php"><i class="fas fa-tachometer-alt fa-fw"></i> แดชบอร์ด</a>
         </li>
+        <?php endif; ?>
 
+        <?php if (in_array($_SESSION['role'], ['admin', 'teacher'])): ?>
         <!-- Module 1: Master Data Management -->
         <?php 
             $is_master_active = in_array($current_page, ['teachers.php', 'students.php', 'subjects.php', 'classes.php', 'classrooms.php']); 
@@ -38,7 +41,9 @@
                 <li><a href="#"><i class="fas fa-angle-right fa-fw" style="font-size: 0.8em; opacity: 0.5;"></i> ข้อมูลห้องเรียน</a></li>
             </ul>
         </li>
+        <?php endif; ?>
 
+        <?php if (in_array($_SESSION['role'], ['admin', 'teacher'])): ?>
         <!-- Module 2: Schedule Management -->
         <li>
             <a href="#"><i class="fas fa-calendar-alt fa-fw"></i> จัดการตารางเรียน</a>
@@ -53,7 +58,16 @@
         <li>
             <a href="#"><i class="fas fa-user-check fa-fw"></i> บันทึกเวลาเรียน</a>
         </li>
+        <?php endif; ?>
 
+        <?php if ($_SESSION['role'] === 'student'): ?>
+        <!-- Student Schedule -->
+        <li class="<?php echo ($current_page == 'student_schedule.php') ? 'active' : ''; ?>">
+            <a href="student_schedule.php"><i class="fas fa-calendar-alt fa-fw"></i> ตารางเรียน (Student)</a>
+        </li>
+        <?php endif; ?>
+
+        <?php if ($_SESSION['role'] === 'admin'): ?>
         <!-- Module 4: Auth & Access Control (Admin Settings) -->
         <li>
             <a href="#adminSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
@@ -64,6 +78,7 @@
                 <li><a href="#">ตั้งค่าระบบ</a></li>
             </ul>
         </li>
+        <?php endif; ?>
     </ul>
 
     <div class="p-3 text-center" style="opacity: 0.6; font-size: 0.8rem;">

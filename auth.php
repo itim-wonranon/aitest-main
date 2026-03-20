@@ -48,9 +48,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $_SESSION['full_name'] = $user['first_name'] . ' ' . $user['last_name'];
                 $_SESSION['logged_in'] = true;
 
-                // Log entry could be added here
-                
-                header("Location: index.php");
+                // Redirect based on role
+                if ($user['role'] === 'admin') {
+                    header("Location: index.php");
+                } elseif ($user['role'] === 'teacher') {
+                    header("Location: teachers.php");
+                } elseif ($user['role'] === 'student') {
+                    header("Location: student_schedule.php");
+                } else {
+                    header("Location: index.php");
+                }
                 exit();
 
             } else {

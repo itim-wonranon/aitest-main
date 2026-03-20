@@ -18,4 +18,23 @@ if (!isset($_SESSION['created'])) {
     session_regenerate_id(true);
     $_SESSION['created'] = time();
 }
+
+// Helper function for Role-Based Access Control
+function check_role($allowed_roles) {
+    if (!isset($_SESSION['role']) || !in_array($_SESSION['role'], $allowed_roles)) {
+        // Redirect based on current role if unauthorized
+        if (isset($_SESSION['role'])) {
+            if ($_SESSION['role'] === 'student') {
+                header("Location: student_schedule.php");
+            } elseif ($_SESSION['role'] === 'teacher') {
+                header("Location: teachers.php");
+            } else {
+                header("Location: index.php");
+            }
+        } else {
+            header("Location: login.php");
+        }
+        exit();
+    }
+}
 ?>
