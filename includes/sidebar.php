@@ -45,7 +45,11 @@ $current_page = isset($_GET['page']) ? $_GET['page'] : basename($_SERVER['PHP_SE
                         <i class="fas fa-angle-right fa-fw" style="font-size: 0.8em; opacity: 0.5;"></i> ข้อมูลระดับชั้นเรียน
                     </a>
                 </li>
-                <li><a href="#"><i class="fas fa-angle-right fa-fw" style="font-size: 0.8em; opacity: 0.5;"></i> ข้อมูลห้องเรียน</a></li>
+                <li class="<?php echo ($current_page == 'classrooms.php') ? 'active' : ''; ?>">
+                    <a href="classrooms.php">
+                        <i class="fas fa-angle-right fa-fw" style="font-size: 0.8em; opacity: 0.5;"></i> ข้อมูลห้องเรียน
+                    </a>
+                </li>
             </ul>
         </li>
         <?php endif; ?>

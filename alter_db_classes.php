@@ -23,18 +23,20 @@ try {
             ['ม.5', 'มัธยมศึกษาปีที่ 5'],
             ['ม.6', 'มัธยมศึกษาปีที่ 6']
         ];
-        
+
         $insertStmt = $conn->prepare("INSERT INTO class_levels (level_name, level_description) VALUES (?, ?)");
-        
+
         foreach ($dummyClasses as $class) {
             $insertStmt->execute($class);
         }
         echo "Dummy data for class_levels inserted.\n";
-    } else {
+    }
+    else {
         echo "Table 'class_levels' already has data.\n";
     }
 
-} catch (PDOException $e) {
+}
+catch (PDOException $e) {
     echo "Error creating table class_levels: " . $e->getMessage();
 }
 ?>
