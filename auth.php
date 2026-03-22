@@ -27,16 +27,32 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     try {
         // 3. Prevent SQL Injection using PDO Prepared Statements
-        $stmt = $conn->prepare("SELECT id, username, password, role, first_name, last_name FROM users WHERE username = :username LIMIT 1");
+        $stmt = $conn->prepare("SELECT id, username, password, role, first_name, last_name, status FROM users WHERE username = :username LIMIT 1");
         $stmt->bindParam(':username', $username, PDO::PARAM_STR);
         $stmt->execute();
 
         if ($stmt->rowCount() > 0) {
             $user = $stmt->fetch();
 
+            if ($user['status'] === 'suspended') {
+                $_SESSION['error_msg'] = "บัญชีนี้ถูกระงับการใช้งาน กรุณาติดต่อแอดมิน";
+                // Log failed attempt
+                $log_stmt = $conn->prepare("INSERT INTO login_history (user_id, ip_address, user_agent, status) VALUES (?, ?, ?, 'failed')");
+                $log_stmt->execute([$user['id'], $_SERVER['REMOTE_ADDR'] ?? '', $_SERVER['HTTP_USER_AGENT'] ?? '']);
+                header("Location: login.php");
+                exit();
+            }
+
             // 4. Verify password against hash
             if (password_verify($password, $user['password'])) {
                 
+                // Log success
+                $log_stmt = $conn->prepare("INSERT INTO login_history (user_id, ip_address, user_agent, status) VALUES (?, ?, ?, 'success')");
+                $log_stmt->execute([$user['id'], $_SERVER['REMOTE_ADDR'] ?? '', $_SERVER['HTTP_USER_AGENT'] ?? '']);
+
+                $act_stmt = $conn->prepare("INSERT INTO activity_logs (user_id, action, entity, details, ip_address) VALUES (?, 'login', 'system', 'User logged in', ?)");
+                $act_stmt->execute([$user['id'], $_SERVER['REMOTE_ADDR'] ?? '']);
+
                 // Login Success!
                 // Best practice: regenerate session ID to prevent session fixation post-login
                 session_regenerate_id(true);

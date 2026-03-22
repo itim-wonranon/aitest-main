@@ -137,13 +137,27 @@ $current_page = isset($_GET['page']) ? $_GET['page'] : basename($_SERVER['PHP_SE
 
         <?php if ($_SESSION['role'] === 'admin'): ?>
         <!-- Module 4: Auth & Access Control (Admin Settings) -->
-        <li>
-            <a href="#adminSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-                <i class="fas fa-user-shield fa-fw"></i> ผู้ดูแลระบบ
+        <?php 
+            $admin_pages = ['admin_settings.php', 'admin_users.php', 'admin_data.php', 'admin_logs.php'];
+            $is_admin_active = in_array($current_page, $admin_pages); 
+        ?>
+        <li class="<?php echo $is_admin_active ? 'active' : ''; ?>">
+            <a href="#adminSubmenu" data-bs-toggle="collapse" aria-expanded="<?php echo $is_admin_active ? 'true' : 'false'; ?>" class="dropdown-toggle <?php echo $is_admin_active ? '' : 'collapsed'; ?>">
+                <i class="fas fa-layer-group fa-fw"></i> ผู้ดูแลระบบ (Admin)
             </a>
-            <ul class="collapse list-unstyled" id="adminSubmenu">
-                <li><a href="#">จัดการสิทธิ์การใช้งาน (RBAC)</a></li>
-                <li><a href="#">ตั้งค่าระบบ</a></li>
+            <ul class="collapse list-unstyled <?php echo $is_admin_active ? 'show' : ''; ?>" id="adminSubmenu">
+                <li class="<?php echo ($current_page == 'admin_users.php') ? 'active' : ''; ?>">
+                    <a href="admin_users.php"><i class="fas fa-angle-right fa-fw" style="font-size: 0.8em; opacity: 0.5;"></i> จัดการผู้ใช้สิทธิ์ (RBAC)</a>
+                </li>
+                <li class="<?php echo ($current_page == 'admin_settings.php') ? 'active' : ''; ?>">
+                    <a href="admin_settings.php"><i class="fas fa-angle-right fa-fw" style="font-size: 0.8em; opacity: 0.5;"></i> ตั้งค่าและประกาศ (CMS)</a>
+                </li>
+                <li class="<?php echo ($current_page == 'admin_data.php') ? 'active' : ''; ?>">
+                    <a href="admin_data.php"><i class="fas fa-angle-right fa-fw" style="font-size: 0.8em; opacity: 0.5;"></i> นำเข้าข้อมูลและสำรอง DB</a>
+                </li>
+                <li class="<?php echo ($current_page == 'admin_logs.php') ? 'active' : ''; ?>">
+                    <a href="admin_logs.php"><i class="fas fa-angle-right fa-fw" style="font-size: 0.8em; opacity: 0.5;"></i> บันทึกความปลอดภัย (Audit)</a>
+                </li>
             </ul>
         </li>
         <?php endif; ?>

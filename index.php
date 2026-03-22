@@ -124,6 +124,9 @@ check_role(['admin']);
                     </div>
                 </div>
 
+                <!-- Row 1.5: Announcements (Alerts) -->
+                <div class="row mb-4" id="announcementsContainer"></div>
+
                 <!-- Row 2: Charts (Module 6 Analytics) -->
                 <div class="row">
                     <!-- Chart 1: Attendance Today -->
@@ -184,6 +187,35 @@ check_role(['admin']);
 
     <!-- Custom Scripts -->
     <script src="js/script.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            // Fetch Announcements
+            $.get('api/admin_api.php?action=get_announcements', function(res) {
+                if(res.status === 'success' && res.data.length > 0) {
+                    let html = '';
+                    res.data.forEach(ann => {
+                        if (ann.status === 'active') {
+                            html += `
+                            <div class="col-12 mb-3">
+                                <div class="alert alert-info border-left-info shadow-sm d-flex align-items-center mb-0" role="alert">
+                                    <i class="fas fa-bullhorn fa-2x me-3 text-info"></i>
+                                    <div>
+                                        <h6 class="alert-heading fw-bold mb-1">${ann.title}</h6>
+                                        <p class="mb-0 small">${ann.message}</p>
+                                        <div class="small text-muted mt-1"><i class="fas fa-clock"></i> ประกาศเมื่อ: ${new Date(ann.created_at).toLocaleString('th-TH')} โดย ${ann.author_name}</div>
+                                    </div>
+                                    <button type="button" class="btn-close ms-auto" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                            </div>
+                            `;
+                        }
+                    });
+                    $('#announcementsContainer').html(html);
+                }
+            }, 'json');
+        });
+    </script>
 
 </body>
 
