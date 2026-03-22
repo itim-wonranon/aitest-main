@@ -101,8 +101,30 @@ $current_page = isset($_GET['page']) ? $_GET['page'] : basename($_SERVER['PHP_SE
         </li>
 
         <!-- Module 5: Attendance Tracking System -->
-        <li>
-            <a href="#"><i class="fas fa-user-check fa-fw"></i> บันทึกเวลาเรียน</a>
+        <?php 
+            $attendance_pages = ['attendance_entry.php', 'leave_requests.php', 'attendance_report.php', 'attendance_audit.php'];
+            $is_attendance_active = in_array($current_page, $attendance_pages); 
+        ?>
+        <li class="<?php echo $is_attendance_active ? 'active' : ''; ?>">
+            <a href="#attendanceSubmenu" data-bs-toggle="collapse" aria-expanded="<?php echo $is_attendance_active ? 'true' : 'false'; ?>" class="dropdown-toggle <?php echo $is_attendance_active ? '' : 'collapsed'; ?>">
+                <i class="fas fa-user-check fa-fw"></i> บันทึกเวลาเรียน
+            </a>
+            <ul class="collapse list-unstyled <?php echo $is_attendance_active ? 'show' : ''; ?>" id="attendanceSubmenu">
+                <li class="<?php echo ($current_page == 'attendance_entry.php') ? 'active' : ''; ?>">
+                    <a href="attendance_entry.php"><i class="fas fa-angle-right fa-fw" style="font-size: 0.8em; opacity: 0.5;"></i> เช็กชื่อรายคาบ</a>
+                </li>
+                <li class="<?php echo ($current_page == 'leave_requests.php') ? 'active' : ''; ?>">
+                    <a href="leave_requests.php"><i class="fas fa-angle-right fa-fw" style="font-size: 0.8em; opacity: 0.5;"></i> จัดการใบลา</a>
+                </li>
+                <li class="<?php echo ($current_page == 'attendance_report.php') ? 'active' : ''; ?>">
+                    <a href="attendance_report.php"><i class="fas fa-angle-right fa-fw" style="font-size: 0.8em; opacity: 0.5;"></i> สถิติและแจ้งเตือน มส.</a>
+                </li>
+                <?php if ($_SESSION['role'] === 'admin'): ?>
+                <li class="<?php echo ($current_page == 'attendance_audit.php') ? 'active' : ''; ?>">
+                    <a href="attendance_audit.php"><i class="fas fa-angle-right fa-fw" style="font-size: 0.8em; opacity: 0.5;"></i> ประวัติการแก้เวลาเรียน (Audit)</a>
+                </li>
+                <?php endif; ?>
+            </ul>
         </li>
         <?php endif; ?>
 
