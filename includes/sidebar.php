@@ -18,7 +18,8 @@ $current_page = isset($_GET['page']) ? $_GET['page'] : basename($_SERVER['PHP_SE
         <?php if (in_array($_SESSION['role'], ['admin', 'teacher'])): ?>
         <!-- Module 1: Master Data Management -->
         <?php 
-            $is_master_active = in_array($current_page, ['teachers.php', 'students.php', 'subjects.php', 'classes.php', 'classrooms.php']); 
+            $master_pages = ['teachers.php', 'students.php', 'subjects.php', 'classes.php', 'classrooms.php', 'physical_rooms.php'];
+            $is_master_active = in_array($current_page, $master_pages); 
         ?>
         <li class="<?php echo $is_master_active ? 'active' : ''; ?>">
             <a href="#masterDataSubmenu" data-bs-toggle="collapse" aria-expanded="<?php echo $is_master_active ? 'true' : 'false'; ?>" class="dropdown-toggle <?php echo $is_master_active ? '' : 'collapsed'; ?>">
@@ -26,29 +27,22 @@ $current_page = isset($_GET['page']) ? $_GET['page'] : basename($_SERVER['PHP_SE
             </a>
             <ul class="collapse list-unstyled <?php echo $is_master_active ? 'show' : ''; ?>" id="masterDataSubmenu">
                 <li class="<?php echo ($current_page == 'teachers.php') ? 'active' : ''; ?>">
-                    <a href="teachers.php">
-                        <i class="fas fa-angle-right fa-fw" style="font-size: 0.8em; opacity: 0.5;"></i> ข้อมูลบุคลากรครู
-                    </a>
+                    <a href="teachers.php"><i class="fas fa-angle-right fa-fw" style="font-size: 0.8em; opacity: 0.5;"></i> ข้อมูลบุคลากรครู</a>
                 </li>
                 <li class="<?php echo ($current_page == 'students.php') ? 'active' : ''; ?>">
-                    <a href="students.php">
-                        <i class="fas fa-angle-right fa-fw" style="font-size: 0.8em; opacity: 0.5;"></i> ข้อมูลนักเรียน
-                    </a>
+                    <a href="students.php"><i class="fas fa-angle-right fa-fw" style="font-size: 0.8em; opacity: 0.5;"></i> ข้อมูลนักเรียน</a>
                 </li>
                 <li class="<?php echo ($current_page == 'subjects.php') ? 'active' : ''; ?>">
-                    <a href="subjects.php">
-                        <i class="fas fa-angle-right fa-fw" style="font-size: 0.8em; opacity: 0.5;"></i> ข้อมูลรายวิชา
-                    </a>
+                    <a href="subjects.php"><i class="fas fa-angle-right fa-fw" style="font-size: 0.8em; opacity: 0.5;"></i> ข้อมูลรายวิชา</a>
                 </li>
                 <li class="<?php echo ($current_page == 'classes.php') ? 'active' : ''; ?>">
-                    <a href="classes.php">
-                        <i class="fas fa-angle-right fa-fw" style="font-size: 0.8em; opacity: 0.5;"></i> ข้อมูลระดับชั้นเรียน
-                    </a>
+                    <a href="classes.php"><i class="fas fa-angle-right fa-fw" style="font-size: 0.8em; opacity: 0.5;"></i> ข้อมูลระดับชั้นเรียน</a>
                 </li>
                 <li class="<?php echo ($current_page == 'classrooms.php') ? 'active' : ''; ?>">
-                    <a href="classrooms.php">
-                        <i class="fas fa-angle-right fa-fw" style="font-size: 0.8em; opacity: 0.5;"></i> ข้อมูลห้องเรียน
-                    </a>
+                    <a href="classrooms.php"><i class="fas fa-angle-right fa-fw" style="font-size: 0.8em; opacity: 0.5;"></i> ข้อมูลห้องเรียน</a>
+                </li>
+                <li class="<?php echo ($current_page == 'physical_rooms.php') ? 'active' : ''; ?>">
+                    <a href="physical_rooms.php"><i class="fas fa-angle-right fa-fw" style="font-size: 0.8em; opacity: 0.5;"></i> สถานที่เรียน (Physical)</a>
                 </li>
             </ul>
         </li>
@@ -56,8 +50,27 @@ $current_page = isset($_GET['page']) ? $_GET['page'] : basename($_SERVER['PHP_SE
 
         <?php if (in_array($_SESSION['role'], ['admin', 'teacher'])): ?>
         <!-- Module 2: Schedule Management -->
-        <li>
-            <a href="#"><i class="fas fa-calendar-alt fa-fw"></i> จัดการตารางเรียน</a>
+        <?php 
+            $schedule_pages = ['schedule_manage.php', 'schedule_substitutions.php', 'schedule_logs_view.php'];
+            $is_schedule_active = in_array($current_page, $schedule_pages); 
+        ?>
+        <li class="<?php echo $is_schedule_active ? 'active' : ''; ?>">
+            <a href="#scheduleSubmenu" data-bs-toggle="collapse" aria-expanded="<?php echo $is_schedule_active ? 'true' : 'false'; ?>" class="dropdown-toggle <?php echo $is_schedule_active ? '' : 'collapsed'; ?>">
+                <i class="fas fa-calendar-alt fa-fw"></i> จัดการตารางเรียน
+            </a>
+            <ul class="collapse list-unstyled <?php echo $is_schedule_active ? 'show' : ''; ?>" id="scheduleSubmenu">
+                <li class="<?php echo ($current_page == 'schedule_manage.php') ? 'active' : ''; ?>">
+                    <a href="schedule_manage.php"><i class="fas fa-angle-right fa-fw" style="font-size: 0.8em; opacity: 0.5;"></i> จัดตารางเรียน</a>
+                </li>
+                <li class="<?php echo ($current_page == 'schedule_substitutions.php') ? 'active' : ''; ?>">
+                    <a href="schedule_substitutions.php"><i class="fas fa-angle-right fa-fw" style="font-size: 0.8em; opacity: 0.5;"></i> จัดการครูสอนแทน</a>
+                </li>
+                <?php if ($_SESSION['role'] === 'admin'): ?>
+                <li class="<?php echo ($current_page == 'schedule_logs_view.php') ? 'active' : ''; ?>">
+                    <a href="schedule_logs_view.php"><i class="fas fa-angle-right fa-fw" style="font-size: 0.8em; opacity: 0.5;"></i> ประวัติการแก้ไข</a>
+                </li>
+                <?php endif; ?>
+            </ul>
         </li>
 
         <!-- Module 3: Grading System -->
