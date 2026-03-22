@@ -74,8 +74,30 @@ $current_page = isset($_GET['page']) ? $_GET['page'] : basename($_SERVER['PHP_SE
         </li>
 
         <!-- Module 3: Grading System -->
-        <li>
-            <a href="#"><i class="fas fa-star fa-fw"></i> บันทึกผลการเรียน</a>
+        <?php 
+            $grading_pages = ['grading_config.php', 'grading_entry.php', 'grading_report.php', 'grading_logs.php'];
+            $is_grading_active = in_array($current_page, $grading_pages); 
+        ?>
+        <li class="<?php echo $is_grading_active ? 'active' : ''; ?>">
+            <a href="#gradingSubmenu" data-bs-toggle="collapse" aria-expanded="<?php echo $is_grading_active ? 'true' : 'false'; ?>" class="dropdown-toggle <?php echo $is_grading_active ? '' : 'collapsed'; ?>">
+                <i class="fas fa-star fa-fw"></i> บันทึกผลการเรียน
+            </a>
+            <ul class="collapse list-unstyled <?php echo $is_grading_active ? 'show' : ''; ?>" id="gradingSubmenu">
+                <li class="<?php echo ($current_page == 'grading_config.php') ? 'active' : ''; ?>">
+                    <a href="grading_config.php"><i class="fas fa-angle-right fa-fw" style="font-size: 0.8em; opacity: 0.5;"></i> กำหนดโครงสร้างคะแนน</a>
+                </li>
+                <li class="<?php echo ($current_page == 'grading_entry.php') ? 'active' : ''; ?>">
+                    <a href="grading_entry.php"><i class="fas fa-angle-right fa-fw" style="font-size: 0.8em; opacity: 0.5;"></i> บันทึกผลและตัดเกรด</a>
+                </li>
+                <li class="<?php echo ($current_page == 'grading_report.php') ? 'active' : ''; ?>">
+                    <a href="grading_report.php"><i class="fas fa-angle-right fa-fw" style="font-size: 0.8em; opacity: 0.5;"></i> รายงานและสถิติ</a>
+                </li>
+                <?php if ($_SESSION['role'] === 'admin'): ?>
+                <li class="<?php echo ($current_page == 'grading_logs.php') ? 'active' : ''; ?>">
+                    <a href="grading_logs.php"><i class="fas fa-angle-right fa-fw" style="font-size: 0.8em; opacity: 0.5;"></i> ประวัติการแก้เกรด</a>
+                </li>
+                <?php endif; ?>
+            </ul>
         </li>
 
         <!-- Module 5: Attendance Tracking System -->
