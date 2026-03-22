@@ -1,6 +1,12 @@
 <?php 
 require_once 'includes/session_check.php'; 
-check_role(['admin']);
+
+if ($_SESSION['role'] === 'student') {
+    header("Location: my_schedule.php");
+    exit;
+}
+
+check_role(['admin', 'teacher']);
 ?>
 <!DOCTYPE html>
 <html lang="th">

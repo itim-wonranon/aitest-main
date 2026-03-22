@@ -15,6 +15,11 @@ $current_page = isset($_GET['page']) ? $_GET['page'] : basename($_SERVER['PHP_SE
         </li>
         <?php endif; ?>
 
+        <!-- Every User Can See Their Schedule -->
+        <li class="<?php echo ($current_page == 'my_schedule.php') ? 'active' : ''; ?>">
+            <a href="my_schedule.php"><i class="fas fa-calendar-alt fa-fw"></i> ตารางของฉัน (My Schedule)</a>
+        </li>
+
         <?php if (in_array($_SESSION['role'], ['admin', 'teacher'])): ?>
         <!-- Module 1: Master Data Management -->
         <?php 
